@@ -28,4 +28,7 @@ int countNeighbours(board *b, int x, int y);
 //! Function that changes state of the board
 void evolve_board(board *b);
 
+//! Function that fills board with living cells
+void seed_board(board *b, int population);
+
 #endif //GAMEOFLIFE_BOARD_H

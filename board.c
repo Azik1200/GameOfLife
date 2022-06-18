@@ -45,5 +45,15 @@ void evolve_board(board *b){
         }
     }
     b->isBuffer1 = b->isBuffer1 ? false : true;
-
+}
+void seed_board(board *b, int population){
+    population = population > 0 ? population : -population;
+    int pop = b->length*b->height > population ? b->length * b->height : population;
+    double density = (double) pop / b->height * b->length;
+    char *currBuf = (char *)(b->isBuffer1 ? b->buffer1 : b->buffer2);
+    for(int i = 0; i < b->length * b->height; i++){
+        double chance = (double )rand() / RAND_MAX;
+        if(chance < density) currBuf[i] = 1;
+        else currBuf[i] = 0;
+    }
 }
