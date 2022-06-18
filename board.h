@@ -7,19 +7,23 @@
 
 #include "stdbool.h"
 
-struct board_{
+//! Here we define struct board_. It use double buffering.
+struct board_ {
     int height;
     int length;
     char *buffer1;
     char *buffer2;
+    bool isBuffer1;
 };
 
+//! Defining typedef for struct board_.
 typedef struct board_ board;
 
+//! Init for the board. Accept height and length.
 board *init_board(int height, int length);
 
-int countNeighbors(board *b, int x, int  y, bool isBuffer1);
-
+//! Count Neighbors of point, where x is line and y is colum.
+int countNeighbors(board *b, int x, int y);
 
 
 #endif //GAMEOFLIFE_BOARD_H

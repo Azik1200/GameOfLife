@@ -13,13 +13,14 @@ board *init_board(int height, int length){
     res->height = height;
     res->buffer1 = calloc(height * length, sizeof(char));
     res->buffer2 = calloc(height * length, sizeof(char));
+    res->isBuffer1 = true;
 
     return res;
 }
 
-int countNeighbours(board *b, int x, int  y, bool isBuffer1) {
+int countNeighbours(board *b, int x, int  y) {
     int res = 0;
-    char **curBuf = (char**)(isBuffer1 ? b->buffer1 : b->buffer2);
+    char **curBuf = (char**)(b->isBuffer1 ? b->buffer1 : b->buffer2);
     for(int i = -1; i <= 1; i++){
         for(int j = -1; j <= 1; j++){
             if(i == 0 && j == 0) continue;
