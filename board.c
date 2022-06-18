@@ -16,3 +16,17 @@ board *init_board(int height, int length){
 
     return res;
 }
+
+int countNeighbours(board *b, int x, int  y, bool isBuffer1) {
+    int res = 0;
+    char **curBuf = (char**)(isBuffer1 ? b->buffer1 : b->buffer2);
+    for(int i = -1; i <= 1; i++){
+        for(int j = -1; j <= 1; j++){
+            if(i == 0 && j == 0) continue;
+            int x_ = (x+i)%b->length;
+            int y_ = (y+j)%b->height;
+            if(curBuf[y_][x_] == 'O') res++;
+        }
+    }
+    return res;
+}

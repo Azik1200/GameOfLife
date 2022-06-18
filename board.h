@@ -18,7 +18,7 @@ typedef struct board_ board;
 
 board *init_board(int height, int length);
 
-int countNeighbor(board *b, int x, int  y, bool isBuffer1);
+int countNeighbors(board *b, int x, int  y, bool isBuffer1);
 
 
 
