@@ -7,13 +7,13 @@
 
 struct board_{
     int hight;
-    int lenth;
+    int length;
     char *buffer1;
     char *buffer2;
 };
 
 typedef struct board_ board;
 
-board *init_board(int hight, int lenth);
+board *init_board(int hight, int length);
 
 #endif //GAMEOFLIFE_BOARD_H
