@@ -43,13 +43,13 @@ int main(int argc, char **argv){
     srand(time(NULL));
     printf("Life is a game!\n");
 
-    // Setup SDL
+    //! Setup SDL
     if(SDL_Init(SDL_INIT_VIDEO) == -1){
         fprintf(stderr, "Error while initializing SDL: %s\n", SDL_GetError( ) );
         goto SDLInitializationError;
     }
 
-    // Create a window
+    //! Create a window
     SDL_WindowFlags flags =
             SDL_WINDOW_SHOWN | SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MINIMIZED;
     SDL_Window *window = SDL_CreateWindow(
@@ -64,7 +64,7 @@ int main(int argc, char **argv){
         goto WindowCreationError;
     }
 
-    // Create a renderer
+    //! Create a renderer
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     if(renderer == NULL){
         fprintf(stderr, "error creating renderer: %s\n", SDL_GetError());
