@@ -3,8 +3,9 @@
 #include <stdbool.h>
 #include <time.h>
 #include "board.h"
+#include <unistd.h>
 
-bool quit = false;
+
 int square_size = 5;
 
 void draw_board(board *b, int cam_x, int cam_y, SDL_Renderer *renderer){
@@ -22,7 +23,7 @@ void draw_board(board *b, int cam_x, int cam_y, SDL_Renderer *renderer){
             int x_ = x * square_size - cam_x;
             // draw only pixels that can be displayed on a screen;
             if((x_ > -2*square_size && y > -2*square_size) &&
-            (x_ < screenWidth + 2*square_size && y_ < screenHeight + 2*square_size)){
+               (x_ < screenWidth + 2*square_size && y_ < screenHeight + 2*square_size)){
                 rect.x = x_;
                 rect.y = y_;
                 if(currBuf[y * b->length + x] == 1){
@@ -73,13 +74,39 @@ int main(int argc, char **argv){
     board *b = init_board(1000, 1000);
     seed_board(b, 400*400);
     SDL_Event e;
-
+    bool quit = false;
+    bool pause = false;
+    int cam_x = 200, cam_y = 200;
     while (!quit){
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT)
                 quit = true;
+            else if(e.type == SDL_KEYDOWN){
+                switch (e.key.keysym.scancode) {
+                    case SDL_SCANCODE_SPACE:
+                        pause = pause ? false : true;
+                        break;
+                    case SDL_SCANCODE_Q:
+                        quit = true;
+                        break;
+                    case SDL_SCANCODE_W:
+                        cam_y -= square_size;
+                        break;
+                    case SDL_SCANCODE_A:
+                        cam_x -= square_size;
+                        break;
+                    case SDL_SCANCODE_S:
+                        cam_y += square_size;
+                        break;
+                    case SDL_SCANCODE_D:
+                        cam_x += square_size;
+                        break;
+                }
+            }
         }
-        draw_board(b, 0, 0, renderer);
+        draw_board(b, cam_x, cam_y, renderer);
+        if(!pause)evolve_board(b);
+        usleep(1000*20);
     }
 
     RendererCreationError:
