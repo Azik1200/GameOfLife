@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <stdbool.h>
+#include "board.h"
+
+bool quit = false;
 
 int main(int argc, char **argv){
     printf("Life is a game!\n");
@@ -32,13 +36,20 @@ int main(int argc, char **argv){
         goto RendererCreationError;
     }
 
-    // here should be game logic
+    board *b = init_board(200,200);
+    SDL_Event e;
 
+    while (!quit){
+        while(SDL_PollEvent(&e)){
+            if(e.type == SDL_QUIT)
+                quit = true;
+        }
+    }
 
-        RendererCreationError:
-   SDL_DestroyWindow( window );
-   SDL_QuitSubSystem( flags );
-        WindowCreationError:
+    RendererCreationError:
+    SDL_DestroyWindow( window );
+    SDL_QuitSubSystem( flags );
+    WindowCreationError:
     SDL_Quit();
     SDLInitializationError:
     return 0;
