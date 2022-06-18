@@ -20,40 +20,46 @@ board *init_board(int height, int length){
 
 int countNeighbours(board *b, int x, int y) {
     int res = 0;
-    char **curBuf = (char**)(b->isBuffer1 ? b->buffer1 : b->buffer2);
+    char *curBuf = (b->isBuffer1 ? b->buffer1 : b->buffer2);
     for(int i = -1; i <= 1; i++){
         for(int j = -1; j <= 1; j++){
             if(i == 0 && j == 0) continue;
-            int x_ = (x+j)%b->length;
-            int y_ = (y+i)%b->height;
-            if(curBuf[y_][x_] == 1) res++;
+            int x_ = ((x+j)%b->length + b->length) % b->length;
+            int y_ = ((y+i)%b->height + b->height) % b->height;
+            if(curBuf[y_ * b->length + x_] == 1) res++;
         }
     }
     return res;
 }
 
 void evolve_board(board *b){
-    char **currBuf = (char **)(b->isBuffer1 ? b->buffer1 : b->buffer2);
-    char **nextBuf = (char **)(b->isBuffer1 ? b->buffer2 : b->buffer1);
+    char *currBuf = (b->isBuffer1 ? b->buffer1 : b->buffer2);
+    char *nextBuf = (b->isBuffer1 ? b->buffer2 : b->buffer1);
 
     for(int i = 0; i < b->height; i++){
         for(int j = 0; j < b->length; j++){
             int n = countNeighbours(b, j, i);
-            if(currBuf[i][j] == 1 && (n == 2 || n == 3)) nextBuf[i][j] = 1;
-            else if(currBuf[i][j] == 0 && (n == 3)) nextBuf[i][j] = 1;
-            else nextBuf[i][j] = 0;
+            if(currBuf[i * b->length + j] == 1 && (n == 2 || n == 3)) nextBuf[i * b->length + j] = 1;
+            else if(currBuf[i * b->length + j] == 0 && (n == 3)) nextBuf[i * b->length + j] = 1;
+            else nextBuf[i * b->length + j] = 0;
         }
     }
     b->isBuffer1 = b->isBuffer1 ? false : true;
 }
 void seed_board(board *b, int population){
     population = population > 0 ? population : -population;
-    int pop = b->length*b->height > population ? b->length * b->height : population;
-    double density = (double) pop / b->height * b->length;
+    int pop = b->length*b->height < population ? b->length * b->height : population;
+    double density = (double) pop / (double )(b->height * b->length);
     char *currBuf = (char *)(b->isBuffer1 ? b->buffer1 : b->buffer2);
     for(int i = 0; i < b->length * b->height; i++){
-        double chance = (double )rand() / RAND_MAX;
+        double chance = (double)rand() / (double)RAND_MAX;
         if(chance < density) currBuf[i] = 1;
         else currBuf[i] = 0;
     }
+}
+
+void free_board(board *b){
+    free(b->buffer1);
+    free(b->buffer2);
+    free(b);
 }

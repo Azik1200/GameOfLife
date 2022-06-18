@@ -31,4 +31,6 @@ void evolve_board(board *b);
 //! Function that fills board with living cells
 void seed_board(board *b, int population);
 
+//! Function that clears memory taken by board
+void free_board(board *b);
 #endif //GAMEOFLIFE_BOARD_H
