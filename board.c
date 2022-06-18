@@ -57,3 +57,9 @@ void seed_board(board *b, int population){
         else currBuf[i] = 0;
     }
 }
+
+void free_board(board *b){
+    free(b->buffer1);
+    free(b->buffer2);
+    free(b);
+}
