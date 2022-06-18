@@ -23,7 +23,9 @@ typedef struct board_ board;
 board *init_board(int height, int length);
 
 //! Count Neighbors of point, where x is line and y is colum.
-int countNeighbors(board *b, int x, int y);
+int countNeighbours(board *b, int x, int y);
 
+//! Function that changes state of the board
+void evolve_board(board *b);
 
 #endif //GAMEOFLIFE_BOARD_H
