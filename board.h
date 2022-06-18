@@ -5,8 +5,10 @@
 #ifndef GAMEOFLIFE_BOARD_H
 #define GAMEOFLIFE_BOARD_H
 
+#include "stdbool.h"
+
 struct board_{
-    int hight;
+    int height;
     int length;
     char *buffer1;
     char *buffer2;
@@ -14,6 +16,10 @@ struct board_{
 
 typedef struct board_ board;
 
-board *init_board(int hight, int length);
+board *init_board(int height, int length);
+
+int countNeighbor(board *b, int x, int  y, bool isBuffer1);
+
+
 
 #endif //GAMEOFLIFE_BOARD_H

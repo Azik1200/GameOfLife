@@ -6,13 +6,13 @@
 #include <stdlib.h>
 
 
-board *init_board(int hight, int length){
+board *init_board(int height, int length){
     board *res = calloc(1, sizeof(board));
 
     res->length = length;
-    res->hight = hight;
-    res->buffer1 = calloc(hight*length, sizeof(char));
-    res->buffer2 = calloc(hight*length, sizeof(char));
+    res->height = height;
+    res->buffer1 = calloc(height * length, sizeof(char));
+    res->buffer2 = calloc(height * length, sizeof(char));
 
     return res;
 }
