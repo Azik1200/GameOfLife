@@ -63,9 +63,9 @@ int main()
       return CU_get_error();
    }
 
-   if ((NULL == CU_add_test(pSuite, "test of fprintf()", test_countNeighbours)) ||
-       (NULL == CU_add_test(pSuite, "test of fread()", test_evolve_board)) ||
-       (NULL == CU_add_test(pSuite, "test of fread()", test_free_board))
+   if ((NULL == CU_add_test(pSuite, "test of countNeighbours()", test_countNeighbours)) ||
+       (NULL == CU_add_test(pSuite, "test of evolve_board()", test_evolve_board)) ||
+       (NULL == CU_add_test(pSuite, "test of free_board()", test_free_board))
        )
    {
       CU_cleanup_registry();
